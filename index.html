@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Programme FUTUR - Authentification des Certificats</title>
+
+        <!-- Tailwind CSS CDN -->
+        <script src="https://cdn.tailwindcss.com"></script>
+
+        <!-- Google Fonts - Montserrat -->
+        <link
+            href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap"
+            rel="stylesheet" />
+
+        <!-- Custom Tailwind Configuration -->
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        fontFamily: {
+                            montserrat: ['Montserrat', 'sans-serif'],
+                        },
+                        colors: {
+                            'custom-blue': '#0b1d3a',
+                            'custom-cyan': '#00ffff',
+                        },
+                    },
+                },
+            }
+        </script>
+    </head>
+    <body class="font-montserrat bg-custom-blue min-h-screen">
+        <!-- Header Navigation -->
+        <header
+            class="bg-white bg-opacity-10 backdrop-blur-md border-b border-white border-opacity-20">
+            <div class="container mx-auto px-4 py-4">
+                <div class="flex justify-between items-center">
+                    <!-- Logo and Brand -->
+                    <div class="flex items-center space-x-3">
+                        <div
+                            class="w-12 h-12 bg-custom-cyan rounded-lg flex items-center justify-center">
+                            <svg
+                                class="w-8 h-8 text-custom-blue"
+                                fill="currentColor"
+                                viewBox="0 0 20 20">
+                                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M4 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 3a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h1 class="text-2xl font-bold text-white">
+                                FuturCerty
+                            </h1>
+                            <p class="text-sm text-gray-300">
+                                Certification Platform
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Admin Button -->
+                    <button
+                        id="adminBtn"
+                        class="bg-gray-700 bg-opacity-80 text-white px-6 py-2 rounded-lg hover:bg-gray-600 transition duration-300 backdrop-blur-sm">
+                        Accès Admin
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <div class="container mx-auto px-4 py-8">
+            <!-- Title Section -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-5xl font-bold text-white mb-4">
+                    PROGRAMME FUTUR
+                </h2>
+                <p class="text-gray-300 text-lg md:text-xl max-w-3xl mx-auto">
+                    Plateforme d'authentification des certificats délivrés par
+                    le Programme FUTUR
+                </p>
+            </div>
+
+            <!-- Search Section -->
+            <div id="searchSection" class="max-w-md mx-auto mb-8">
+                <div
+                    class="bg-white bg-opacity-10 backdrop-blur-md rounded-lg p-6">
+                    <h2
+                        class="text-white text-xl font-semibold mb-4 text-center">
+                        Recherche de Certificat
+                    </h2>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label
+                                for="matriculeInput"
+                                class="block text-gray-300 text-sm font-medium mb-2">
+                                Numéro Matricule
+                            </label>
+                            <input
+                                type="text"
+                                id="matriculeInput"
+                                placeholder="Ex: PF-NATI-2025-1002 ou NATI-2025-1002"
+                                class="w-full px-4 py-3 bg-white bg-opacity-20 border border-gray-300 border-opacity-30 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-custom-cyan focus:border-transparent" />
+                        </div>
+
+                        <button
+                            id="searchBtn"
+                            class="w-full bg-custom-cyan text-custom-blue font-semibold py-3 px-6 rounded-lg hover:bg-opacity-80 transition duration-300 transform hover:scale-105">
+                            Rechercher
+                        </button>
+                    </div>
+
+                    <!-- Error Message -->
+                    <div
+                        id="errorMessage"
+                        class="hidden mt-4 p-3 bg-red-500 bg-opacity-20 border border-red-500 border-opacity-50 rounded-lg">
+                        <p class="text-red-300 text-sm text-center"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Certificate Display -->
+            <div id="studentCard" class="hidden max-w-4xl mx-auto mb-8">
+                <div class="bg-white rounded-lg shadow-2xl overflow-hidden">
+                    <!-- Header -->
+                    <div class="bg-custom-blue text-white p-6 text-center">
+                        <h2 class="text-2xl font-bold mb-2">
+                            CERTIFICAT DE FORMATION
+                        </h2>
+                        <p class="text-gray-300">Programme FUTUR</p>
+                    </div>
+
+                    <!-- Student Information -->
+                    <div class="p-8">
+                        <div
+                            class="flex flex-col md:flex-row items-center gap-8">
+                            <!-- Photo -->
+                            <div class="flex-shrink-0">
+                                <img
+                                    id="studentPhoto"
+                                    src=""
+                                    alt="Photo de l'étudiant"
+                                    class="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-custom-cyan" />
+                            </div>
+
+                            <!-- Details -->
+                            <div class="flex-1 text-center md:text-left">
+                                <h3
+                                    id="studentName"
+                                    class="text-2xl md:text-3xl font-bold text-custom-blue mb-2"></h3>
+                                <p class="text-gray-600 mb-2">
+                                    <span class="font-semibold"
+                                        >Matricule:</span
+                                    >
+                                    <span
+                                        id="studentMatricule"
+                                        class="text-custom-blue font-semibold"></span>
+                                </p>
+                                <p class="text-gray-600 mb-4">
+                                    <span class="font-semibold">Filière:</span>
+                                    <span
+                                        id="studentFiliere"
+                                        class="text-custom-blue font-semibold"></span>
+                                </p>
+
+                                <!-- Certificate Message -->
+                                <div
+                                    class="bg-gray-50 p-4 rounded-lg border-l-4 border-custom-cyan mb-4">
+                                    <p
+                                        id="certificateMessage"
+                                        class="text-gray-700 leading-relaxed"></p>
+                                </div>
+
+                                <!-- Download Button -->
+                                <div class="text-center">
+                                    <button
+                                        id="downloadCertBtn"
+                                        class="bg-custom-cyan text-custom-blue font-semibold py-3 px-8 rounded-lg hover:bg-opacity-80 transition duration-300 transform hover:scale-105">
+                                        📄 Télécharger le Certificat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Certificate Footer -->
+                    <div class="bg-gray-50 p-4 text-center border-t">
+                        <p class="text-gray-500 text-sm">
+                            Certificat authentifié par le Programme FUTUR -
+                            <span id="currentYear">2025</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Login Modal -->
+            <div
+                id="adminModal"
+                class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+                    <h3
+                        class="text-xl font-bold text-custom-blue mb-4 text-center">
+                        Connexion Admin
+                    </h3>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label
+                                class="block text-gray-700 text-sm font-medium mb-2"
+                                >Nom d'utilisateur</label
+                            >
+                            <input
+                                type="text"
+                                id="adminUsername"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                        </div>
+
+                        <div>
+                            <label
+                                class="block text-gray-700 text-sm font-medium mb-2"
+                                >Mot de passe</label
+                            >
+                            <input
+                                type="password"
+                                id="adminPassword"
+                                class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                        </div>
+
+                        <div
+                            id="adminError"
+                            class="hidden text-red-500 text-sm text-center"></div>
+
+                        <div class="flex gap-4">
+                            <button
+                                id="adminLoginBtn"
+                                class="flex-1 bg-custom-cyan text-custom-blue font-semibold py-2 px-4 rounded-lg hover:bg-opacity-80 transition duration-300">
+                                Se connecter
+                            </button>
+                            <button
+                                id="adminCancelBtn"
+                                class="flex-1 bg-gray-500 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-300">
+                                Annuler
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Panel -->
+            <div id="adminPanel" class="hidden max-w-6xl mx-auto">
+                <div class="bg-white rounded-lg shadow-2xl p-8">
+                    <h3
+                        class="text-2xl font-bold text-custom-blue mb-6 text-center">
+                        Panel d'Administration
+                    </h3>
+
+                    <!-- Navigation Tabs -->
+                    <div class="flex mb-6 border-b">
+                        <button
+                            id="addStudentTab"
+                            class="px-6 py-3 text-custom-blue border-b-2 border-custom-cyan font-semibold">
+                            Ajouter un étudiant
+                        </button>
+                        <button
+                            id="viewStudentsTab"
+                            class="px-6 py-3 text-gray-600 hover:text-custom-blue">
+                            Tous les étudiants
+                        </button>
+                    </div>
+
+                    <!-- Add Student Form -->
+                    <div id="addStudentSection">
+                        <form id="addStudentForm" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label
+                                        class="block text-gray-700 text-sm font-medium mb-2"
+                                        >Prénom</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="studentFirstName"
+                                        required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                                </div>
+
+                                <div>
+                                    <label
+                                        class="block text-gray-700 text-sm font-medium mb-2"
+                                        >Nom</label
+                                    >
+                                    <input
+                                        type="text"
+                                        id="studentLastName"
+                                        required
+                                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-gray-700 text-sm font-medium mb-2"
+                                    >Matricule</label
+                                >
+                                <input
+                                    type="text"
+                                    id="studentMatriculeNew"
+                                    placeholder="PF-NATI-2025-XXXX"
+                                    required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-gray-700 text-sm font-medium mb-2"
+                                    >Filière</label
+                                >
+                                <div
+                                    id="studentFilieresGroup"
+                                    class="flex flex-wrap gap-4">
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="studentFilieres"
+                                            value="Initiation à l'informatique"
+                                            class="mr-2" />
+                                        Initiation à l'informatique
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="studentFilieres"
+                                            value="Intelligence artificielle"
+                                            class="mr-2" />
+                                        Intelligence artificielle
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="studentFilieres"
+                                            value="Développement Web"
+                                            class="mr-2" />
+                                        Développement Web
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="studentFilieres"
+                                            value="Pilotage de drone"
+                                            class="mr-2" />
+                                        Pilotage de drone
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            name="studentFilieres"
+                                            value="Graphisme et photographie"
+                                            class="mr-2" />
+                                        Graphisme et photographie
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label
+                                    class="block text-gray-700 text-sm font-medium mb-2"
+                                    >URL de la photo</label
+                                >
+                                <input
+                                    type="url"
+                                    id="studentPhotoUrl"
+                                    placeholder="images/75.jpg"
+                                    required
+                                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                            </div>
+
+                            <div
+                                id="addStudentMessage"
+                                class="hidden p-3 rounded-lg text-center"></div>
+
+                            <div class="flex gap-4">
+                                <button
+                                    type="submit"
+                                    class="flex-1 bg-custom-cyan text-custom-blue font-semibold py-3 px-6 rounded-lg hover:bg-opacity-80 transition duration-300">
+                                    Ajouter l'étudiant
+                                </button>
+                                <button
+                                    type="button"
+                                    id="logoutBtn"
+                                    class="flex-1 bg-red-500 text-white py-3 px-6 rounded-lg hover:bg-red-600 transition duration-300">
+                                    Se déconnecter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- View All Students Section -->
+                    <div id="viewStudentsSection" class="hidden">
+                        <div class="mb-4 flex justify-between items-center">
+                            <h4 class="text-lg font-semibold text-custom-blue">
+                                Liste des étudiants (<span id="studentCount"
+                                    >0</span
+                                >)
+                            </h4>
+                            <div class="flex gap-2">
+                                <input
+                                    type="text"
+                                    id="searchStudents"
+                                    placeholder="Rechercher par nom ou matricule..."
+                                    class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-custom-cyan" />
+                                <button
+                                    type="button"
+                                    id="logoutBtn2"
+                                    class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">
+                                    Se déconnecter
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table
+                                class="w-full border-collapse border border-gray-300">
+                                <thead>
+                                    <tr class="bg-gray-100">
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left">
+                                            Photo
+                                        </th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left">
+                                            Nom
+                                        </th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left">
+                                            Matricule
+                                        </th>
+                                        <th
+                                            class="border border-gray-300 px-4 py-2 text-left">
+                                            Filière
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody id="studentsTableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer
+            class="bg-white bg-opacity-10 backdrop-blur-md border-t border-white border-opacity-20 mt-12">
+            <div class="container mx-auto px-4 py-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <!-- About Section -->
+                    <div>
+                        <div class="flex items-center space-x-2 mb-4">
+                            <div
+                                class="w-8 h-8 bg-custom-cyan rounded-lg flex items-center justify-center">
+                                <svg
+                                    class="w-5 h-5 text-custom-blue"
+                                    fill="currentColor"
+                                    viewBox="0 0 20 20">
+                                    <path
+                                        d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                                    <path
+                                        fill-rule="evenodd"
+                                        d="M4 5a2 2 0 012-2h8a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 3a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z"
+                                        clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                            <h3 class="text-white font-semibold">FuturCerty</h3>
+                        </div>
+                        <p class="text-gray-300 text-sm">
+                            Plateforme officielle de vérification des
+                            certificats du Programme FUTUR. Authentification
+                            sécurisée et fiable.
+                        </p>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">Contact</h4>
+                        <div class="space-y-2 text-sm text-gray-300">
+                            <p>📧 contact@programmefutur.org</p>
+                            <p>📞 +229 XX XX XX XX</p>
+                            <p>📍 Cotonou, Bénin</p>
+                        </div>
+                    </div>
+
+                    <!-- Links Section -->
+                    <div>
+                        <h4 class="text-white font-semibold mb-4">
+                            Liens Utiles
+                        </h4>
+                        <div class="space-y-2 text-sm">
+                            <a
+                                href="#"
+                                class="text-gray-300 hover:text-custom-cyan transition duration-300"
+                                >À propos</a
+                            ><br />
+                            <a
+                                href="#"
+                                class="text-gray-300 hover:text-custom-cyan transition duration-300"
+                                >Formations</a
+                            ><br />
+                            <a
+                                href="#"
+                                class="text-gray-300 hover:text-custom-cyan transition duration-300"
+                                >Support</a
+                            ><br />
+                            <a
+                                href="#"
+                                class="text-gray-300 hover:text-custom-cyan transition duration-300"
+                                >Politique de confidentialité</a
+                            >
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Copyright -->
+                <div
+                    class="border-t border-white border-opacity-20 mt-8 pt-6 text-center">
+                    <p class="text-gray-400 text-sm">
+                        © <span id="footerYear">2025</span> Programme FUTUR.
+                        Tous droits réservés. Développé avec ❤️ pour l'éducation
+                        au Bénin.
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="data.js"></script>
+        <script src="script.js"></script>
+    </body>
+</html>

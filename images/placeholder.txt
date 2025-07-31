@@ -1,0 +1,18 @@
+This directory should contain 74 student photos named 1.jpg through 74.jpg.
+Each photo corresponds to a student in the data.js file.
+
+Since we cannot generate binary image files, you will need to:
+1. Create an 'images' folder
+2. Add 74 student photos named sequentially (1.jpg, 2.jpg, ..., 74.jpg)
+3. Ensure photos are appropriately sized (recommended: 300x300px minimum)
+
+If photos are not available, the application includes fallback functionality
+that displays a placeholder SVG when images fail to load.
+
+Example file structure:
+images/
+├── 1.jpg  (NTOUA C. Crepin)
+├── 2.jpg  (HAMIDOU S. Fleury)
+├── 3.jpg  (MOUHAMADOU H. Hadjalatou)
+...
+├── 74.jpg (YAKPARI T. Maurice)
