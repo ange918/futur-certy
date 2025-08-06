@@ -389,4 +389,4 @@ function generateCertificateHTML(student) {
     </body>
     </html>
     `
-}
+} 
