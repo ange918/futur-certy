@@ -58,8 +58,7 @@ function initializeEventListeners() {
     // Search in students list
     document.getElementById('searchStudents').addEventListener('input', filterStudentsList)
 
-    // Download certificate functionality
-    document.getElementById('downloadCertBtn').addEventListener('click', downloadCertificate)
+
 
     // Close modal when clicking outside
     adminModal.addEventListener('click', function (e) {
@@ -142,8 +141,20 @@ function displayStudentCard(student) {
     document.getElementById('studentFiliere').textContent = student.filieres ? student.filieres.join(', ') : ''
 
     // Generate certificate message
-    const certificateMessage = `Nous certifions que ${student.name} a suivi avec succès la formation en ${student.filieres ? student.filieres.join(', ') : ''} dans le cadre du Programme FUTUR.`
-    document.getElementById('certificateMessage').textContent = certificateMessage
+    const certificateMessage = `Nous certifions que l'étudiant(e) ${student.name} a suivi avec succès la formation en ${student.filieres ? student.filieres.join(', ') : ''} dispensée dans le cadre du Programme FUTUR.
+
+Cette attestation confirme sa participation effective, l'acquisition des compétences fondamentales prévues par le programme, ainsi que la validation des évaluations finales.
+Elle est délivrée conformément aux standards de qualité et aux exigences pédagogiques du Programme FUTUR.
+
+
+
+🔒 Authenticité vérifiée par la plateforme officielle
+
+Ce certificat est authentique et vérifié électroniquement via la plateforme de certification du Programme FUTUR.
+Chaque certificat émis est traçable, infalsifiable et consultable en ligne à l’aide de son numéro de matricule unique.
+
+Toute tentative de falsification ou de reproduction non autorisée est formellement interdite et expose à des sanctions.`
+    document.getElementById('certificateMessage').innerHTML = certificateMessage.replace(/\n/g, '<br>')
 
     // Show the card with animation
     studentCard.classList.remove('hidden')
@@ -327,66 +338,4 @@ function filterStudentsList() {
     })
 }
 
-function downloadCertificate() {
-    if (!currentStudent) {
-        alert("Aucun certificat à télécharger. Veuillez d'abord rechercher un étudiant.")
-        return
-    }
-
-    const certificateHTML = generateCertificateHTML(currentStudent)
-    const printWindow = window.open('', '_blank')
-    printWindow.document.write(certificateHTML)
-    printWindow.document.close()
-
-    setTimeout(() => {
-        printWindow.print()
-        printWindow.close()
-    }, 500)
-}
-
-function generateCertificateHTML(student) {
-    const currentYear = new Date().getFullYear()
-    const currentDate = new Date().toLocaleDateString('fr-FR', {
-        day: 'long',
-        year: 'numeric',
-        month: 'long',
-    })
-
-    return `
-    <!DOCTYPE html>
-    <html lang="fr">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Certificat - ${student.name}</title>
-        <style>
-            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; }
-            .certificate { max-width: 800px; margin: 0 auto; background: white; border: 2px solid #333; padding: 40px; }
-            .header { text-align: center; border-bottom: 2px solid #333; padding-bottom: 20px; margin-bottom: 30px; }
-            .content { text-align: center; }
-            .student-photo { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin: 20px auto; }
-            .footer { margin-top: 40px; text-align: center; font-size: 12px; color: #666; }
-        </style>
-    </head>
-    <body>
-        <div class="certificate">
-            <div class="header">
-                <h1>CERTIFICAT DE FORMATION</h1>
-                <p>Programme FUTUR</p>
-            </div>
-            <div class="content">
-                <img src="${student.photo}" alt="Photo de ${student.name}" class="student-photo">
-                <h2>${student.name}</h2>
-                <p><strong>Matricule:</strong> ${student.matricule}</p>
-                <p><strong>Filière:</strong> ${student.filieres.join(', ')}</p>
-                <p>Nous certifions que <strong>${student.name}</strong> a suivi avec succès la formation en <strong>${student.filieres.join(', ')}</strong> dans le cadre du Programme FUTUR.</p>
-            </div>
-            <div class="footer">
-                <p>Certificat authentifié par le Programme FUTUR - ${currentYear}</p>
-                <p>Délivré le ${currentDate}</p>
-            </div>
-        </div>
-    </body>
-    </html>
-    `
-} 
+ 

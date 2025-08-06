@@ -142,8 +142,20 @@ function displayStudentCard(student) {
     document.getElementById('studentFiliere').textContent = student.filieres ? student.filieres.join(', ') : ''
 
     // Generate certificate message
-    const certificateMessage = `Nous certifions que ${student.name} a suivi avec succès la formation en ${student.filieres ? student.filieres.join(', ') : ''} dans le cadre du Programme FUTUR.`
-    document.getElementById('certificateMessage').textContent = certificateMessage
+    const certificateMessage = `Nous certifions que l'étudiant(e) ${student.name} a suivi avec succès la formation en ${student.filieres ? student.filieres.join(', ') : ''} dispensée dans le cadre du Programme FUTUR.
+
+Cette attestation confirme sa participation effective, l'acquisition des compétences fondamentales prévues par le programme, ainsi que la validation des évaluations finales.
+Elle est délivrée conformément aux standards de qualité et aux exigences pédagogiques du Programme FUTUR.
+
+
+
+🔒 Authenticité vérifiée par la plateforme officielle
+
+Ce certificat est authentique et vérifié électroniquement via la plateforme de certification du Programme FUTUR.
+Chaque certificat émis est traçable, infalsifiable et consultable en ligne à l'aide de son numéro de matricule unique.
+
+Toute tentative de falsification ou de reproduction non autorisée est formellement interdite et expose à des sanctions.`
+    document.getElementById('certificateMessage').innerHTML = certificateMessage.replace(/\n/g, '<br>')
 
     // Show the card with animation
     studentCard.classList.remove('hidden')
@@ -379,7 +391,19 @@ function generateCertificateHTML(student) {
                 <h2>${student.name}</h2>
                 <p><strong>Matricule:</strong> ${student.matricule}</p>
                 <p><strong>Filière:</strong> ${student.filieres.join(', ')}</p>
-                <p>Nous certifions que <strong>${student.name}</strong> a suivi avec succès la formation en <strong>${student.filieres.join(', ')}</strong> dans le cadre du Programme FUTUR.</p>
+                <p>Nous certifions que l'étudiant(e) <strong>${student.name}</strong> a suivi avec succès la formation en <strong>${student.filieres.join(', ')}</strong> dispensée dans le cadre du Programme FUTUR.
+
+Cette attestation confirme sa participation effective, l’acquisition des compétences fondamentales prévues par le programme, ainsi que la validation des évaluations finales.
+Elle est délivrée conformément aux standards de qualité et aux exigences pédagogiques du Programme FUTUR.
+
+
+
+🔒 Authenticité vérifiée par la plateforme officielle
+
+Ce certificat est authentique et vérifié électroniquement via la plateforme de certification du Programme FUTUR.
+Chaque certificat émis est traçable, infalsifiable et consultable en ligne à l’aide de son numéro de matricule unique.
+
+Toute tentative de falsification ou de reproduction non autorisée est formellement interdite et expose à des sanctions..</p>
             </div>
             <div class="footer">
                 <p>Certificat authentifié par le Programme FUTUR - ${currentYear}</p>
