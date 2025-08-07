@@ -1118,7 +1118,7 @@ const students = [
     },
     {
         id: 118,
-        matricule: 'PF-GDM-2025-1044',
+        matricule: 'PF-GDM-2025-1057',
         name: 'ADONNANGBO Marthe-Belle',
         filieres: ['Photographie'],
         photo: 'images/G45.jpg',
@@ -1332,6 +1332,13 @@ const students = [
         name: 'PEHOUNDE Honoré',
         filieres: ['Intelligence artificielle'],
         photo: 'images/G55.jpg',
+    },
+    {
+        id: 143,
+        matricule: 'PF-GDM-2025-1058',
+        name: 'SOSSA Stanislas',
+        filieres: ['Photographie'],
+        photo: 'images/G43.jpg',
     },
 ]
 
