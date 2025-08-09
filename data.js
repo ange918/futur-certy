@@ -1340,6 +1340,20 @@ const students = [
         filieres: ['Photographie'],
         photo: 'images/G43.jpg',
     },
+     {
+        id: 144,
+        matricule: 'PF-NATI-2025-1004',
+        name: 'MAKIERI BOHO Souléman',
+        filieres: ['Photographie'],
+        photo: 'images/11004.jpg',
+    },
+     {
+        id: 145,
+        matricule: 'PF-NATI-2025-1097',
+        name: 'YAMPAI Orou Aristide',
+        filieres: ['Photographie'],
+        photo: 'images/1097.jpg',
+    },
 ]
 
 // Admin credentials
